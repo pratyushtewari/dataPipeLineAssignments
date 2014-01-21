@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+	</head>
+	<body>		
+		<div class="center">
+		<h1>Data Pipeline Project Byte 1 Example by Pratyush Tewari</h1>
+		<div class="feedHeading"><h2>Feed Contents</h2>
+		
+		<form action="search" method="POST">
+		  Search : <input name="search_term" value="">
+		  <input type="submit" value="Submit">
+		</form>
+
+		</div>
+		{% for item in feed %}
+		<div class="feed">
+			<div id="title" style="
+    text-align: center;"> <a href="{{ item.link }}" target="_blank"><img src="{{item.thumbnail|safe}}" alt="{{item.description|safe}}" height="60px" width="60px">{{ item.title }}</a> </div>			
+			<div id="description">{{item.description|safe}}</div>
+			<div id="description">Release: {{item.published|safe}}</div>
+		</div>
+		{% endfor %}
+	</body>
+</html>
