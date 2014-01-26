@@ -1,29 +1,16 @@
 #!/usr/bin/env python
 #
-# Copyright 2007 Google Inc.
+# Byte 2 Version 2
+# 
+# Copyright 11/2013 Jennifer Mankoff
 #
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
+# Licensed under GPL v3 (http://www.gnu.org/licenses/gpl.html)
 #
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
+
+# standard imports you should have already been using
 import webapp2
-
-# this is for parsing the feed from the yahoo pipes
-import feedparser
 import logging
-
-# this is for displaying HTML
 from webapp2_extras import jinja2
-
-# this is for encoding the search terms
 import urllib
 
 # this library is for decoding json responses
@@ -32,7 +19,33 @@ from webapp2_extras import json
 # this is used for constructing URLs to google's APIS
 from apiclient.discovery import build
 
-# BaseHandler subclasses RequestHandler so that we can use jinja
+# this library is for making http requests and so on
+import httplib2
+
+import json
+import csv
+
+
+
+
+
+# This API key is provided by google as described in the tutorial
+API_KEY = 'AIzaSyDHl9YPYoOL2rUgdF9oDQAO6OYuNUA0Uvo'
+
+# This is the table id for the fusion table
+TABLE_ID = '19Y7KxZmnKDhI_qqZxdaTkjckDgvqWhUYrxyLnnY'
+
+# This uses discovery to create an object that can talk to the 
+# fusion tables API using the developer key
+service = build('fusiontables', 'v1', developerKey=API_KEY)
+
+# Use this url to find the data structure returned in your column query
+# https://www.googleapis.com/fusiontables/v1/tables/TABLE_ID/columns?key=API_KEY
+
+# we are adding a new class that will 
+# help us to use jinja. MainHandler will sublclass this new
+# class (BaseHandler), and BaseHandler is in charge of subclassing
+# webapp2.RequestHandler 
 class BaseHandler(webapp2.RequestHandler):
 
     @webapp2.cached_property
@@ -44,22 +57,43 @@ class BaseHandler(webapp2.RequestHandler):
         # The first argument should be a string naming the template file to be used. 
         # The second argument should be a pointer to an array of context variables
         #  that can be used for substitutions within the template
-    def render_response(self, _template, **context):
+    # lets jinja render our response
+    def render_response(self, _template, context):
+        values = {'url_for': self.uri_for}
+
+        logging.info(context)
+        values.update(context)
+        self.response.headers['Content-Type'] = 'text/html'
+
         # Renders a template and writes the result to the response.
-        rv = self.jinja2.render_template(_template, **context)
-        self.response.write(rv)
+        try: 
+            rv = self.jinja2.render_template(_template, **values)
+            self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
+            self.response.write(rv)
+        except TemplateNotFound:
+            self.abort(404)
 
 
 # Class MainHandler now subclasses BaseHandler instead of webapp2
 class MainHandler(BaseHandler):
          # This method should return the html to be displayed
-    def get(self):  
+    def get(self): 
 
-    	API_KEY = 'AIzaSyDHl9YPYoOL2rUgdF9oDQAO6OYuNUA0Uvo'
-        TABLE_ID = '19Y7KxZmnKDhI_qqZxdaTkjckDgvqWhUYrxyLnnY'
-        request = service.column().list(tableId=TABLE_ID)
-        logging.info('Columns: ' + request)
-        self.render_response('index.html')
+        context = {}
+
+#        request = service.column().list(tableId=TABLE_ID)
+#        data = json.loads(str(request))
+#        for k, v in data['items']:
+#           logging.info(k + ' --> ' + v)
+
+#        query = "SELECT * FROM " + TABLE_ID + " WHERE  AnimalType = 'DOG' LIMIT 10"
+#        response = service.query().sql(sql=query).execute()
+#        logging.info(response)
+
+
+        # and render the response
+        self.render_response('index.html', context) 
+
 
 app = webapp2.WSGIApplication([('/.*', MainHandler)], debug=True)
 
