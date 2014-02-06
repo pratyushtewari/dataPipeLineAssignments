@@ -3,7 +3,7 @@
 body { 
 		background: #eceeef; 
 		color: #596064;
-		font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+		font-family: 'Open Sans', sans-serif;
 		font-size: 15px;
 		line-height: 26px;
 	}
@@ -40,6 +40,7 @@ h1,h2,h3,h4 {
 	color: #444;
 	margin: 0 0 30px 0;
 	padding: 0;
+	text-align: center;
 }
 .feedHeading {
 	margin-left: auto;
