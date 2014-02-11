@@ -82,8 +82,63 @@ class MainHandler(BaseHandler):
         #data = [['Age', 'Adopted', 'Euthanized'],['< 6 months', 1000, 400],['6-12 months',  1170, 460],['12-5 years',  660,       1120],['>5 years',  1030,      540]]
         # Get data from the json file.
         data = self.get_all_data()
-        context = {'data':json.dumps(data)} 
-        self.render_response('index.html', context)
+        columns = data['columns']
+        rows = data['rows']
+
+        # specify the ages we will search for
+        age_mapping = {u'Infant - Younger than 6 months':'<6mo',
+                       u'Youth - Younger than 1 year':'6mo-1yr',
+                       u'Older than 1 year':'1yr-6yr',
+                       u'Older than 7 years':'>7yr',
+                       u'':'Unspecified'}
+        # create an 'empty' array storing the number of dogs in each outcome
+        
+        # specify the outcomes we will search for
+        outcomes = ['Adopted', 'Euthanized', 'Foster', 'Returned to Owner', 'Transferred to Rescue Group', 'Other']
+        ages = ['<6mo', '6mo-1yr', '1yr-6yr', '>7yr', 'Unspecified']
+
+        age_by_outcome = []
+        for age in ages:
+            res = {'Age': age}
+            for outcome in outcomes:
+                res[outcome] = 0
+            age_by_outcome = age_by_outcome + [res]
+
+        # find the column id for ages
+        ageid = columns.index(u'Age')
+        
+        # find the column id for outcomes
+        outcomeid = columns.index(u'OutcomeType')
+
+        # loop through each row
+        for row in rows: 
+            # get the age of the dog in that row
+            age = age_mapping[row[ageid]]
+            # get the outcome for the dog in that row
+            outcome = row[outcomeid]
+            # if the age is a known value (good data) find
+            # out which of the items in our list it corresponds to
+            if age in ages: age_position = ages.index(age)
+            # otherwise we will store the data in the 'Other' age column
+            else: age_position = ages.index('Other')
+
+            # if the outcome is a bad value, we call it 'Other' as well
+            if outcome not in outcomes: outcome = 'Other'
+
+            # now get the current number of dogs with that outcome and age
+            outcomes_for_age = age_by_outcome[age_position]
+            # and increase it by one
+            outcomes_for_age[outcome] = outcomes_for_age[outcome] + 1
+
+        logging.info(age_by_outcome)
+    
+        # add it to the context being passed to jinja
+        variables = {'data':json.dumps(age_by_outcome),
+                     'y_labels':outcomes,
+                     'x_labels':ages}
+       
+        # and render the response
+        self.render_response('index.html', variables)
 
     # collect the data from google fusion tables
     # pass in the name of the file the data should be stored in
