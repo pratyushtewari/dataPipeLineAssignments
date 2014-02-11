@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 #
-# Byte 2 Version 2
+# Byte 2
 # 
-# Copyright 11/2013 Jennifer Mankoff
+# Copyright 1/2014 Pratyush Tewari
 #
 # Licensed under GPL v3 (http://www.gnu.org/licenses/gpl.html)
 #
