@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 #
-# Byte 2 Version 2
+# Byte 3
 # 
-# Copyright 11/2013 Jennifer Mankoff
+# Copyright 1/2014 Pratyush Tewari
 #
 # Licensed under GPL v3 (http://www.gnu.org/licenses/gpl.html)
 #
 
-# standard imports you should have already been using
+# standard imports
 import webapp2
 import logging
 from webapp2_extras import jinja2
@@ -21,11 +21,10 @@ from apiclient.discovery import build
 
 # this library is for making http requests and so on
 import httplib2
-
 import json
 import csv
-
-
+import numpy
+from django.utils import simplejson
 
 
 
@@ -80,10 +79,36 @@ class MainHandler(BaseHandler):
     def get(self): 
 
         """default web page (index.html)""" 
-        data = [['Age', 'Adopted', 'Euthanized'],['< 6 months', 1000, 400],['6-12 months',  1170, 460],['12-5 years',  660,       1120],['>5 years',  1030,      540]]
+        #data = [['Age', 'Adopted', 'Euthanized'],['< 6 months', 1000, 400],['6-12 months',  1170, 460],['12-5 years',  660,       1120],['>5 years',  1030,      540]]
+        # Get data from the json file.
+        data = self.get_all_data()
         context = {'data':json.dumps(data)} 
         self.render_response('index.html', context)
-        
+
+    # collect the data from google fusion tables
+    # pass in the name of the file the data should be stored in
+    def get_all_data(self):
+        """ collect data from the server. """
+
+        # open the data stored in a file called "data.json"
+        try:
+            fp = open("data/data.json")
+            response = simplejson.load(fp)
+        # but if that file does not exist, download the data from fusiontables
+        except IOError:
+            logging.info("failed to load file")
+            service = build('fusiontables', 'v1', developerKey=API_KEY)
+            query = "SELECT * FROM " + TABLE_ID + " WHERE  AnimalType = 'DOG'"
+            response = service.query().sql(sql=query).execute()
+            
+        return response
+      
+
+
+# This specifies that MainHandler should handle a request to 
+# jmankoff-byte2.appspot.com/
+# This is where you would add additional handlers if you 
+# wanted to have more subpages on that website.        
 app = webapp2.WSGIApplication([('/.*', MainHandler)], debug=True)
 
 
