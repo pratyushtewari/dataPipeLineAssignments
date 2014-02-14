@@ -4,6 +4,8 @@ from apiclient.discovery import build
 import urllib
 import json
 import matplotlib.pyplot as plt 
+import pickle
+
 
 
 
@@ -24,9 +26,31 @@ except IOError:
     json.dump(response, fp)
 
 
+summary = {} # this will be our summary of the data
+columns = response['columns'] # the names of all columns
+rows = response['rows'] # the actual data 
 
-# we'll ignore some columns 
-#ignore = [u'Outcome', u'AnimalID', u'AnimalType', u'Name', u'IconName', u'IntakeDate', u'OutcomeDate', u'Latitude', u'Longitude', u'Breed', u'SpayNeuter', u'AnimalID', u'AnimalType', u'IntakeDate', u'IntakeYear', u'IntakeMonth', u'Name', u'Breed', u'Sex', 'Size', u'Color', u'IntakeType', u'OutcomeSubtype', u'ZipWhereFound', u'Latitude', u'Longitude', u'ZipWherePlaced', u'OutcomeDate', u'OutcomeYear', u'OutcomeMonth', u'IconName']
+for i in range(0, len(columns)):  # loops through each column
 
+    answers = {} # will store unique values for this column
+
+    for row in rows:
+        key = row[i] 
+        # convert any string values to ascii, and any empty strings 
+        # to a string called 'EMPTY' we can use as a key
+        if type(key) is unicode: key = row[i].encode('ascii','ignore') 
+        if key == '': key = 'EMPTY'
+       
+            
+        try:               # increase the count the key already exists
+            answers[key] = answers[key] + 1
+        except KeyError:   # or set it to 1 if it does not exist
+           answers[key] = 1
+        summary[columns[i]] = answers   # store the result in summary
+
+afile = open(r'd.pkl', 'wb')
+pickle.dump(summary, afile)
+afile.close()
+    
 
 

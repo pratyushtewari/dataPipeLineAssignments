@@ -3,9 +3,58 @@
 		
 		<html>
   <head>
-  <h1>Data Pipeline Project Byte 3 Example by Pratyush Tewari</h1>
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="d3/d3.v3.js"></script>
+    <script type="text/javascript" src="d3/d3-tip.js"></script>
+  <style>
+
+body {
+  font: 10px sans-serif;
+}
+
+svg {
+  padding: 10px 0 0 10px;
+}
+
+.arc {
+  stroke: #fff;
+}
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+  </style>
+  
+  </head>
+  <body>
+
+  <h1>Data Pipeline Project Byte 3 Example by Pratyush Tewari</h1>   
+
     <script type="text/javascript">
        // ----------- EVERY CHART NEEDS DATA --------------
        // this is the data we passed from main.py
@@ -96,15 +145,28 @@
 
        // ------- D3's DOM MANIPULATION MAGIC GOES HERE -------
 
+      
+
+
        // the svg element is for drawing. 
        var svg = d3.select("body").append("svg")
           // note that we need to accound for margins 'by hand'
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
-  // and add a group that is inside the margins
+        // and add a group that is inside the margins
         .append("g")
           // this makes sure that everything we do inside this group is translated to margin coordinates
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        var tip = d3.tip()
+        .attr('class', 'd3-tip')
+        .offset([-10, 0])
+        .html(function(d) {
+          return "<strong>" + (d.y1-d.y0) + " animals were " + d.name + ".";
+        });
+
+      svg.call(tip);
+
        // draw the x axis (D3 handles the details in '.call')
        svg.append("g")
          .attr("class", "x axis")
@@ -134,36 +196,20 @@
 
        // this selects 'rect' which will correspond to one rect for each outcome in a bar (age)
        age.selectAll("rect")
-            // join the outcome data for that age to each rectangle
-           .data(function(d) { return d.outcomes; })
-         // the call to enter() creates the elements (one rect per outcome) and binds them to the data
-         .enter().append("rect")
-           .attr("width", x_scale.rangeBand())
-           // use the outcome data to determine y position and height
-           .attr("y", function(d) { return y_scale(d.y1); })
-           .attr("height", function(d) { return y_scale(d.y0) - y_scale(d.y1); })
-           // use the color scale to determine the fill color
-           .attr("fill", function(d) { return color(d.name); })
-           // and cause it to show a tooltip on mouse over
-           .on("mouseover", function(d) {
-               //Get this bar's x/y values, then augment for the tooltip
-               var xPosition = parseFloat(d3.select(this.parentNode).attr("x_position")) + 
-                   x_scale.rangeBand() / 2;
-               var yPosition = parseFloat(d3.select(this).attr("y")) +   14;
+          // join the outcome data for that age to each rectangle
+          .data(function(d) { return d.outcomes; })
+          // the call to enter() creates the elements (one rect per outcome) and binds them to the data
+          .enter().append("rect")
+          .attr("width", x_scale.rangeBand())
+          // use the outcome data to determine y position and height
+          .attr("y", function(d) { return y_scale(d.y1); })
+          .attr("height", function(d) { return y_scale(d.y0) - y_scale(d.y1); })
+          // use the color scale to determine the fill color
+          .attr("fill", function(d) { return color(d.name); })          
+          // and cause it to show a tooltip on mouse over
+          .on('mouseover', tip.show)
+          .on('mouseout', tip.hide);
 
-               //Update the tooltip position and value
-               d3.select("#tooltip")
-                   .style("left", xPosition + "px")
-                   .style("top", yPosition + "px")
-                   .select("#value")
-                   .text(d.y1-d.y0 + " animals were " + d.name + ".");
-
-               //Show the tooltip (it's a div that is otherwise always hidden)
-               d3.select("#tooltip").classed("hidden", false);
-            })
-      // and cause it to disappear when the mouse exits 
-      .on("mouseout", function(d) {
-               d3.select("#tooltip").classed("hidden", true)});
 
        // create a legend with a 20 pixel high separation between
        // items (one item per color in the scale)
@@ -188,14 +234,85 @@
            .attr("dy", ".35em")
            .style("text-anchor", "end")
            .text(function(d) { return d; });
-    </script>
-    </script>
-  </head>
-  <body>
-    <div id="tooltip" class="hidden">
-       <p><strong>Number of Animals:</strong></p>
-       <p><span id="value">100</span></p>
-    </div>
+    
+
+</script>
+  <h2>Dogs in USA grouped by age and the outcomes by the rescue department</h2> 
+
+  </br></br>
+
+<script type="text/javascript">
+
+var radius = 74,
+    padding = 10;
+
+var color = d3.scale.ordinal()
+    .range(["#B0AE6E", "#77BA84", "#29BDBF", "#70B0F1"]);
+
+var arc = d3.svg.arc()
+    .outerRadius(radius)
+    .innerRadius(radius - 30);
+
+var pie = d3.layout.pie()
+    .sort(null)
+    .value(function(d) { return d.population; });
+
+d3.csv("data/data-removed-blanks.csv", function(error, data) {
+  color.domain(d3.keys(data[0]).filter(function(key) { return key !== "OutCome"; }));
+
+  data.forEach(function(d) {
+    d.ages = color.domain().map(function(name) {
+      return {name: name, population: +d[name]};
+    });
+  });
+
+  var legend = d3.select("body").append("svg")
+      .attr("class", "legend")
+      .attr("width", radius * 2)
+      .attr("height", radius * 2)
+    .selectAll("g")
+      .data(color.domain().slice().reverse())
+    .enter().append("g")
+      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+  legend.append("rect")
+      .attr("width", 18)
+      .attr("height", 18)
+      .style("fill", color);
+
+  legend.append("text")
+      .attr("x", 24)
+      .attr("y", 9)
+      .attr("dy", ".35em")
+      .text(function(d) { return d; });
+
+  var svg = d3.select("body").selectAll(".pie")
+      .data(data)
+    .enter().append("svg")
+      .attr("class", "pie")
+      .attr("width", radius * 2)
+      .attr("height", radius * 2)
+    .append("g")
+      .attr("transform", "translate(" + radius + "," + radius + ")");
+
+  svg.selectAll(".arc")
+      .data(function(d) { return pie(d.ages); })
+    .enter().append("path")
+      .attr("class", "arc")
+      .attr("d", arc)
+      .style("fill", function(d) { return color(d.data.name); });
+
+  svg.append("text")
+      .attr("dy", ".35em")
+      .style("text-anchor", "middle")
+      .text(function(d) { return d.OutCome; });
+
+});
+</script>
+  <h2>Dogs in USA Outcomes by rescue department showing % of ages in that outcome.</h2> 
+  <h3>All the blank values are removed</h3>
+  </br></br>
+
   </body>
 </html>
 

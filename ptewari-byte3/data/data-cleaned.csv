@@ -1,0 +1,15 @@
+OutCome,Infant Younger than 6 months,Older than 1 year,Older than 7 years,Youth Younger than 1 year,blank
+blank,4,14,5,4,8
+Adopted,468,1142,60,376,74
+Died,25,9,5,2,44
+Disposal,4,19,14,1,65
+Euthanized,115,763,626,125,1129
+Foster,111,78,18,21,29
+FoundReportExpired,0,0,0,0,13
+LostReportExpired,1,1,1,0,146
+MissingReportExpired,0,1,0,0,0
+Missing,3,2,2,0,11
+NoShow,0,0,1,0,1
+ReleasedInField,12,54,2,21,12
+ReturnedToOwner,60,744,286,108,376
+TransferredToRescueGroup,340,967,230,257,625
