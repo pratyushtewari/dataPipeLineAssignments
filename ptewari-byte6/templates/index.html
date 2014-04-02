@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Data Pipeline Project Byte 6 -- Big Data</title>
+</head>
+ <body>
+   <h1>Data Pipeline Project Byte 6</h1>
+   <h2>Child Birth data in PA, USA</h2>
+  <table>
+  <tr>
+  <th>Mother's Age</th>
+  <th>Mothers's Race</th> 
+  <th>Alcohol Use</th>
+  <th>Avarage Weight</th>
+  <th>Count</th>
+  </tr>
+   {% for state in states %}      
+    <tr>
+      <td>{{state['mother_age']}}</td>
+      <td>{{state['mother_race']}}</td>
+      <td>{{state['alcohol_use']}}</td>
+      <td>{{state['avg_weight']}}</td>
+      <td>{{state['count']}}</td> 
+    </tr>  
+   {% endfor %}
+</table>
+ </body>
+</html>

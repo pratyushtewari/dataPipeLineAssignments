@@ -1,0 +1,146 @@
+cat_outcomes [  147.  1207.  1476.   713.  5188.   778.]
+dog_outcomes [ 1574.  2419.  2120.   257.  2758.   507.]
+//anaconda/lib/python2.7/site-packages/matplotlib/tight_layout.py:225: UserWarning: tight_layout : falling back to Agg renderer
+  warnings.warn("tight_layout : falling back to Agg renderer")
+X_2 2717.60764258 , p 0.0
+The difference is significant. H0 (cats and dogs have the same outcomes) is rejected.
+ml.py:354: UserWarning: The sum of true positives and false positives are equal to zero for some labels. Precision is ill defined for those labels [u'Home' u'Other']. The precision and recall are equal to zero for some labels. fbeta_score is ill defined for those labels [u'Home' u'Other']. 
+  dc_precision, dc_recall, dc_f, dc_support = metrics.precision_recall_fscore_support(y_test, dc_pred)
+Accuracy 
+Dummy Cl: 0.42
+Naive Ba: 0.62
+F Score
+Dummy Cl: [ 0.58823529  0.          0.        ]
+Naive Ba: [ 0.69767442  0.75        0.28571429]
+Precision Euth.	Home	Other
+Dummy Cl: 0.42	0.00	0.00
+Naive Ba: 0.65	0.65	0.46
+Recall    Euth.	Home	Other
+Dummy Cl: 1.00	0.00	0.00
+Naive Ba: 0.75	0.89	0.21
+Accuracy 
+Dummy Cl: 0.42
+Naive Ba: 0.54
+F Score
+Dummy Cl: [ 0.58823529  0.          0.        ]
+Naive Ba: [ 0.72289157  0.55072464  0.15      ]
+Precision Euth.	Home	Other
+Dummy Cl: 0.42	0.00	0.00
+Naive Ba: 0.70	0.45	0.27
+Recall    Euth.	Home	Other
+Dummy Cl: 1.00	0.00	0.00
+Naive Ba: 0.75	0.70	0.10
+Accuracy 
+Dummy Cl: 0.42
+Naive Ba: 0.59
+F Score
+Dummy Cl: [ 0.58823529  0.          0.        ]
+Naive Ba: [ 0.675       0.68571429  0.28571429]
+Precision Euth.	Home	Other
+Dummy Cl: 0.42	0.00	0.00
+Naive Ba: 0.68	0.56	0.46
+Recall    Euth.	Home	Other
+Dummy Cl: 1.00	0.00	0.00
+Naive Ba: 0.68	0.89	0.21
+Accuracy 
+Dummy Cl: 0.42
+Naive Ba: 0.59
+F Score
+Dummy Cl: [ 0.58823529  0.          0.        ]
+Naive Ba: [ 0.72289157  0.67647059  0.19512195]
+Precision Euth.	Home	Other
+Dummy Cl: 0.42	0.00	0.00
+Naive Ba: 0.70	0.56	0.33
+Recall    Euth.	Home	Other
+Dummy Cl: 1.00	0.00	0.00
+Naive Ba: 0.75	0.85	0.14
+Accuracy 
+Dummy Cl: 0.42
+Naive Ba: 0.56
+F Score
+Dummy Cl: [ 0.58823529  0.          0.        ]
+Naive Ba: [ 0.68235294  0.64615385  0.19047619]
+Precision Euth.	Home	Other
+Dummy Cl: 0.42	0.00	0.00
+Naive Ba: 0.64	0.55	0.31
+Recall    Euth.	Home	Other
+Dummy Cl: 1.00	0.00	0.00
+Naive Ba: 0.72	0.78	0.14
+Accuracy 
+Dummy Cl: 0.42
+Naive Ba: 0.65
+F Score
+Dummy Cl: [ 0.58823529  0.          0.        ]
+Naive Ba: [ 0.75        0.73239437  0.29268293]
+Precision Euth.	Home	Other
+Dummy Cl: 0.42	0.00	0.00
+Naive Ba: 0.75	0.59	0.50
+Recall    Euth.	Home	Other
+Dummy Cl: 1.00	0.00	0.00
+Naive Ba: 0.75	0.96	0.21
+Accuracy 
+Dummy Cl: 0.42
+Naive Ba: 0.61
+F Score
+Dummy Cl: [ 0.58823529  0.          0.        ]
+Naive Ba: [ 0.65168539  0.79310345  0.31111111]
+Precision Euth.	Home	Other
+Dummy Cl: 0.42	0.00	0.00
+Naive Ba: 0.59	0.74	0.44
+Recall    Euth.	Home	Other
+Dummy Cl: 1.00	0.00	0.00
+Naive Ba: 0.72	0.85	0.24
+Accuracy 
+Dummy Cl: 0.42
+Naive Ba: 0.56
+F Score
+Dummy Cl: [ 0.59259259  0.          0.        ]
+Naive Ba: [ 0.71794872  0.57971014  0.23255814]
+Precision Euth.	Home	Other
+Dummy Cl: 0.42	0.00	0.00
+Naive Ba: 0.74	0.48	0.33
+Recall    Euth.	Home	Other
+Dummy Cl: 1.00	0.00	0.00
+Naive Ba: 0.70	0.74	0.18
+Accuracy 
+Dummy Cl: 0.42
+Naive Ba: 0.57
+F Score
+Dummy Cl: [ 0.59259259  0.          0.        ]
+Naive Ba: [ 0.61333333  0.69565217  0.30434783]
+Precision Euth.	Home	Other
+Dummy Cl: 0.42	0.00	0.00
+Naive Ba: 0.66	0.57	0.39
+Recall    Euth.	Home	Other
+Dummy Cl: 1.00	0.00	0.00
+Naive Ba: 0.57	0.89	0.25
+Accuracy 
+Dummy Cl: 0.42
+Naive Ba: 0.67
+F Score
+Dummy Cl: [ 0.59259259  0.          0.        ]
+Naive Ba: [ 0.74418605  0.76470588  0.33333333]
+Precision Euth.	Home	Other
+Dummy Cl: 0.42	0.00	0.00
+Naive Ba: 0.70	0.63	0.75
+Recall    Euth.	Home	Other
+Dummy Cl: 1.00	0.00	0.00
+Naive Ba: 0.80	0.96	0.21
+=============================================
+ Results of optimization 
+=============================================
+Dummy Mean accuracy:  0.41798245614
+Naive Bayes Mean accuracy:  0.597708333333
+Accuracy for Dummy Classifier and Naive Bayes differ by -0.179725877193; p<2.80765683752e-07
+These are good summary scores, but you may also want to
+Look at the details of what is going on inside this
+Possibly even without 10 fold cross validation
+And look at the confusion matrix and other details
+Of where mistakes are being made for developing insight
+=============================================
+ Final Results 
+=============================================
+When you have finished this assignment you should
+train a final classifier using the X_rest and y_rest
+using 10-fold cross validation
+And you should print out some sort of statistics on how it did

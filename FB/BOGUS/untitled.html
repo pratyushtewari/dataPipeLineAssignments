@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html> 
+<head> 
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
+  <title>Google Maps API Geocoding Demo</title> 
+  <script src="http://maps.google.com/maps/api/js?sensor=false" 
+          type="text/javascript"></script>
+</head> 
+<body>
+  <div id="map" style="width: 1280px; height: 1024px;"></div>
+
+  <script type="text/javascript">
+//add locations
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 2,
+      center: new google.maps.LatLng(35.00, -25.00),
+      mapTypeId: google.maps.MapTypeId.TERRAIN
+    });
+
+    var address1 = '60033';
+
+    var gc = new google.maps.Geocoder();
+    gc.geocode({'address': address1}, function (res1, status) {
+
+        var hub = res1[0].geometry.location;
+        new google.maps.Marker({
+            position: res1[0].geometry.location,
+            map: map
+          });
+
+        geocodeLine(hub, '44145');  
+        geocodeLine(hub, '03103');
+        geocodeLine(hub, '30236');
+        geocodeLine(hub, '18106');
+        geocodeLine(hub, '64147');
+        geocodeLine(hub, '86401');
+        geocodeLine(hub, '75110');
+        geocodeLine(hub, '56001');
+        geocodeLine(hub, '80239');
+        geocodeLine(hub, '95776');
+    });   
+
+    function geocodeLine(hub, address)
+    {
+        var gc = new google.maps.Geocoder();
+
+        gc.geocode({'address': address}, function (res, status) { 
+            if (status == google.maps.GeocoderStatus.OK) {
+
+              new google.maps.Marker({
+                position: res[0].geometry.location,
+                map: map
+              }); 
+
+              new google.maps.Polyline({
+                path: [
+                  hub,
+                  res[0].geometry.location
+                ],
+                strokeColor: '#FF0000',
+                geodesic: true,
+                map: map
+                });
+            }
+        });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+olderThan1 [  744.   967.  1142.    78.   763.   100.]
+youngerThan1 [ 108.  257.  376.   21.  125.   91.]
+other [  436.   965.   542.   140.  1244.   349.]
+olderThan7 [ 286.  230.   60.   18.  626.   30.]
+
+youngerThan1 and olderThan1
+X_2 158.057777596 , p 2.56713665982e-32
+The difference is significant. H0 (youngerThan1 and olderThan1 have the same outcomes) is rejected.
+
+olderThan1 and olderThan7
+X_2 586.114912144 , p 2.02198496808e-124
+The difference is significant. H0 (olderThan1 and olderThan7 have the same outcomes) is rejected.
+
+youngerThan1 and olderThan7
+X_2 652.666878874 , p 8.39535125684e-139
+The difference is significant. H0 (youngerThan1 and olderThan7 have the same outcomes) is rejected.
+
+ml-copy.py:401: UserWarning: The sum of true positives and false positives are equal to zero for some labels. Precision is ill defined for those labels [u'Home' u'Other']. The precision and recall are equal to zero for some labels. fbeta_score is ill defined for those labels [u'Home' u'Other']. 
+  dc_precision, dc_recall, dc_f, dc_support = metrics.precision_recall_fscore_support(y_test, dc_pred)
+Accuracy 
+Dummy Cl: 0.45
+Naive Ba: 0.56
+F Score
+Dummy Cl: [ 0.61870504  0.          0.        ]
+Naive Ba: [ 0.69047619  0.62857143  0.15789474]
+Precision Euth.	Home	Other
+Dummy Cl: 0.45	0.00	0.00
+Naive Ba: 0.71	0.52	0.23
+Recall    Euth.	Home	Other
+Dummy Cl: 1.00	0.00	0.00
+Naive Ba: 0.67	0.79	0.12
+Accuracy 
+Dummy Cl: 0.45
+Naive Ba: 0.62
+F Score
+Dummy Cl: [ 0.61870504  0.          0.        ]
+Naive Ba: [ 0.71604938  0.69565217  0.33333333]
+Precision Euth.	Home	Other
+Dummy Cl: 0.45	0.00	0.00
+Naive Ba: 0.76	0.59	0.41
+Recall    Euth.	Home	Other
+Dummy Cl: 1.00	0.00	0.00
+Naive Ba: 0.67	0.86	0.28
+Accuracy 
+Dummy Cl: 0.45
+Naive Ba: 0.59
+F Score
+Dummy Cl: [ 0.61870504  0.          0.        ]
+Naive Ba: [ 0.70212766  0.6440678   0.25641026]
+Precision Euth.	Home	Other
+Dummy Cl: 0.45	0.00	0.00
+Naive Ba: 0.65	0.61	0.36
+Recall    Euth.	Home	Other
+Dummy Cl: 1.00	0.00	0.00
+Naive Ba: 0.77	0.68	0.20
+Accuracy 
+Dummy Cl: 0.45
+Naive Ba: 0.60
+F Score
+Dummy Cl: [ 0.61870504  0.          0.        ]
+Naive Ba: [ 0.69767442  0.67741935  0.31818182]
+Precision Euth.	Home	Other
+Dummy Cl: 0.45	0.00	0.00
+Naive Ba: 0.70	0.62	0.37
+Recall    Euth.	Home	Other
+Dummy Cl: 1.00	0.00	0.00
+Naive Ba: 0.70	0.75	0.28
+Accuracy 
+Dummy Cl: 0.45
+Naive Ba: 0.71
+F Score
+Dummy Cl: [ 0.61870504  0.          0.        ]
+Naive Ba: [ 0.8372093   0.73846154  0.3902439 ]
+Precision Euth.	Home	Other
+Dummy Cl: 0.45	0.00	0.00
+Naive Ba: 0.84	0.65	0.50
+Recall    Euth.	Home	Other
+Dummy Cl: 1.00	0.00	0.00
+Naive Ba: 0.84	0.86	0.32
+Accuracy 
+Dummy Cl: 0.45
+Naive Ba: 0.73
+F Score
+Dummy Cl: [ 0.61870504  0.          0.        ]
+Naive Ba: [ 0.79569892  0.78125     0.45714286]
+Precision Euth.	Home	Other
+Dummy Cl: 0.45	0.00	0.00
+Naive Ba: 0.74	0.69	0.80
+Recall    Euth.	Home	Other
+Dummy Cl: 1.00	0.00	0.00
+Naive Ba: 0.86	0.89	0.32
+Accuracy 
+Dummy Cl: 0.45
+Naive Ba: 0.62
+F Score
+Dummy Cl: [ 0.61870504  0.          0.        ]
+Naive Ba: [ 0.79069767  0.64788732  0.17142857]
+Precision Euth.	Home	Other
+Dummy Cl: 0.45	0.00	0.00
+Naive Ba: 0.79	0.53	0.30
+Recall    Euth.	Home	Other
+Dummy Cl: 1.00	0.00	0.00
+Naive Ba: 0.79	0.82	0.12
+Accuracy 
+Dummy Cl: 0.44
+Naive Ba: 0.60
+F Score
+Dummy Cl: [ 0.61313869  0.          0.        ]
+Naive Ba: [ 0.68292683  0.72222222  0.16666667]
+Precision Euth.	Home	Other
+Dummy Cl: 0.44	0.00	0.00
+Naive Ba: 0.70	0.60	0.25
+Recall    Euth.	Home	Other
+Dummy Cl: 1.00	0.00	0.00
+Naive Ba: 0.67	0.90	0.12
+Accuracy 
+Dummy Cl: 0.44
+Naive Ba: 0.64
+F Score
+Dummy Cl: [ 0.61313869  0.          0.        ]
+Naive Ba: [ 0.71264368  0.7761194   0.22222222]
+Precision Euth.	Home	Other
+Dummy Cl: 0.44	0.00	0.00
+Naive Ba: 0.69	0.68	0.33
+Recall    Euth.	Home	Other
+Dummy Cl: 1.00	0.00	0.00
+Naive Ba: 0.74	0.90	0.17
+Accuracy 
+Dummy Cl: 0.44
+Naive Ba: 0.64
+F Score
+Dummy Cl: [ 0.61313869  0.          0.        ]
+Naive Ba: [ 0.71910112  0.75757576  0.22857143]
+Precision Euth.	Home	Other
+Dummy Cl: 0.44	0.00	0.00
+Naive Ba: 0.68	0.66	0.40
+Recall    Euth.	Home	Other
+Dummy Cl: 1.00	0.00	0.00
+Naive Ba: 0.76	0.89	0.16
+=============================================
+ Results of optimization 
+=============================================
+Dummy Mean accuracy:  0.446173245614
+Naive Bayes Mean accuracy:  0.633212719298
+Accuracy for Dummy Classifier and Naive Bayes differ by -0.187039473684; p<1.05366276853e-06

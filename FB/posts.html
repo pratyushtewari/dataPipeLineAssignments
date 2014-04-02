@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+
+<title>Types of Posts</title>
+<script type="text/javascript" src="js/d3/d3.v3.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<h3>Based on 73 activities of Pratyush's Facebook</h3>
+<div id="graph2" style="display: none">
+<script>
+
+  var width = 960,
+      height = 500,
+      radius = Math.min(width, height) / 2;
+
+  var color = d3.scale.ordinal()
+      .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b"]);
+
+  var arc = d3.svg.arc()
+      .outerRadius(radius - 10)
+      .innerRadius(0);
+
+  var pie = d3.layout.pie()
+      .sort(null)
+      .value(function(d) { return d.count; });
+  d3.select('#graph2').style('display', null);
+  var svg = d3.select("#graph2").append("svg")
+      .attr("width", width)
+      .attr("height", height)
+    .append("g")
+      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+  d3.csv("posts.csv", function(error, data) {
+  var totalvalue = 0;
+    data.forEach(function(d) {
+      d.count = +d.count;
+      totalvalue += d.count;
+    });
+
+    var g = svg.selectAll(".arc")
+        .data(pie(data))
+      .enter().append("g")
+        .attr("class", "arc");
+
+    g.append("path")
+        .attr("d", arc)
+        .style("fill", function(d) { return color(d.data.type); });
+
+    g.append("text")
+        .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+        .attr("dy", ".35em")
+        .style("text-anchor", "middle")
+        .text(function(d) { return roundToTwo(d.data.count/totalvalue * 100); });
+  
+    var legend = d3.select("#graph2").append("svg")
+        .attr("class", "legend")
+        .attr("width", radius * 2)
+        .attr("height", 100)
+        .selectAll("g")
+        .data(color.domain().slice().reverse())
+        .enter().append("g")
+        .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+        legend.append("rect")
+            .attr("width", 18)
+            .attr("height", 18)
+            .style("fill", color);
+
+        legend.append("text")
+            .attr("x", 24)
+            .attr("y", 9)
+            .attr("dy", ".35em")
+            .text(function(d) { return d; });
+  });
+
+  function roundToTwo(num) {    
+      return +(Math.round(num + "e+2")  + "e-2");
+  }
+</script>
+</body>
+</html>
