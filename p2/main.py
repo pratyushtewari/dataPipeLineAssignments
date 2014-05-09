@@ -64,21 +64,22 @@ class MainHandler(BaseHandler):
         
         logging.info("running birth related queries")
         #query_string = 'SELECT state, count(*) FROM [{0}] GROUP by state;'.format(_DATABASE_NAME)
-        query_string = "SELECT mother_age, mother_race, alcohol_use, avg(weight_pounds), count(*) FROM [publicdata:samples.natality] where state='PA' and alcohol_use is not NULL GROUP by mother_age, mother_race, alcohol_use order by mother_age desc;".format(_DATABASE_NAME)
-        births = self.run_query(query_string, filename='data/PA.json')
+        query_string = "SELECT mother_age, mother_race, alcohol_use, avg(weight_pounds), year, count(*) FROM [publicdata:samples.natality] where alcohol_use is not NULL and weight_pounds is not null GROUP by mother_age, mother_race, alcohol_use, year order by mother_age desc;".format(_DATABASE_NAME)
+        births = self.run_query(query_string, filename='data/PA2.json')
 
         # similar to the google SQL work we did in byte4, the stuff we 
         # care about is in rows
         rows = births[u'rows']
         states = []
         for row in rows:
-        	mother_age  = row[u'f'][0][u'v']
-        	mother_race  = row[u'f'][1][u'v']
-        	alcohol_use  = row[u'f'][2][u'v']
-        	avg_weight  = row[u'f'][3][u'v']
-        	count = row[u'f'][4][u'v']
-        	state = {'mother_age':unicode.encode(mother_age), 'mother_race':unicode.encode(mother_race), 'alcohol_use':unicode.encode(alcohol_use), 'avg_weight':float(avg_weight), 'count':int(count)}
-        	states = states + [state]            
+            mother_age  = row[u'f'][0][u'v']
+            mother_race  = row[u'f'][1][u'v']
+            alcohol_use  = row[u'f'][2][u'v']
+            avg_weight  = row[u'f'][3][u'v']
+            year  = row[u'f'][4][u'v']
+            count = row[u'f'][5][u'v']
+            state = {'mother_age':mother_age, 'mother_race':mother_race, 'alcohol_use':alcohol_use, 'avg_weight':float(avg_weight), 'year':int(year), 'count':int(count)}
+            states = states + [state]            
         
         context = {"states": states}
         
@@ -95,8 +96,8 @@ class MainHandler(BaseHandler):
         logging.info("running birth related queries")
         logging.info("Selected state" + state_selected)
         #query_string = 'SELECT state, count(*) FROM [{0}] GROUP by state;'.format(_DATABASE_NAME)
-        query_string = "SELECT mother_age, mother_race, alcohol_use, avg(weight_pounds), count(*) FROM [publicdata:samples.natality] where state=\'" + state_selected + "\' and alcohol_use is not NULL GROUP by mother_age, mother_race, alcohol_use order by mother_age desc;".format(_DATABASE_NAME)
-        births = self.run_query(query_string, filename='data/PA.json')
+        query_string = "SELECT mother_age, mother_race, alcohol_use, avg(weight_pounds),year, count(*) FROM [publicdata:samples.natality] where state=\'" + state_selected + "\' and alcohol_use is not NULL GROUP by mother_age, mother_race, alcohol_use, year order by mother_age desc;".format(_DATABASE_NAME)
+        births = self.run_query(query_string, filename='data/PA2.json')
 
         # similar to the google SQL work we did in byte4, the stuff we 
         # care about is in rows
@@ -107,8 +108,9 @@ class MainHandler(BaseHandler):
             mother_race  = row[u'f'][1][u'v']
             alcohol_use  = row[u'f'][2][u'v']
             avg_weight  = row[u'f'][3][u'v']
-            count = row[u'f'][4][u'v']
-            state = {'mother_age':unicode.encode(mother_age), 'mother_race':unicode.encode(mother_race), 'alcohol_use':unicode.encode(alcohol_use), 'avg_weight':float(avg_weight), 'count':int(count)}
+            year  = row[u'f'][4][u'v']
+            count = row[u'f'][5][u'v']
+            state = {'mother_age':unicode.encode(mother_age), 'mother_race':unicode.encode(mother_race), 'alcohol_use':unicode.encode(alcohol_use), 'avg_weight':float(avg_weight), 'year':int(year), 'count':int(count)}
             states = states + [state]            
         
         context = {"states": states}

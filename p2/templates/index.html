@@ -70,6 +70,7 @@
   <th>Mothers's Race</th> 
   <th>Alcohol Use</th>
   <th>Avarage Weight</th>
+  <th>Year</th>
   <th>Count</th>
   </tr>
    {% for state in states %}      
@@ -78,6 +79,7 @@
       <td>{{state['mother_race']}}</td>
       <td>{{state['alcohol_use']}}</td>
       <td>{{state['avg_weight']}}</td>
+      <td>{{state['year']}}</td>
       <td>{{state['count']}}</td> 
     </tr>  
    {% endfor %}
