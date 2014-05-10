@@ -8,7 +8,7 @@
    <h1>Data Pipeline Project Byte 6</h1>
    <form action="" method="POST" style="text-align: center;">
       Select State : 
-      <select name="input_state">
+      <select name="state">
         <option value="AL">Alabama</option>
         <option value="AK">Alaska</option>
         <option value="AZ">Arizona</option>
@@ -66,15 +66,21 @@
    <h2>Child Birth data, USA</h2>
   <table>
   <tr>
+  <th>Mother's Age</th>
+  <th>Mothers's Race</th> 
+  <th>Alcohol Use</th>
+  <th>Avarage Weight</th>
   <th>Year</th>
-  <th>State</th>
   <th>Count</th>
   </tr>
-   {% for _state in _states %}      
+   {% for state in states %}      
     <tr>
-      <td>{{_state['year']}}</td>
-      <td>{{_state['state']}}</td>
-      <td>{{_state['count']}}</td> 
+      <td>{{state['mother_age']}}</td>
+      <td>{{state['mother_race']}}</td>
+      <td>{{state['alcohol_use']}}</td>
+      <td>{{state['avg_weight']}}</td>
+      <td>{{state['year']}}</td>
+      <td>{{state['count']}}</td> 
     </tr>  
    {% endfor %}
 </table>

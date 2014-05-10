@@ -64,21 +64,24 @@ class MainHandler(BaseHandler):
         
         logging.info("running birth related queries")
         #query_string = 'SELECT state, count(*) FROM [{0}] GROUP by state;'.format(_DATABASE_NAME)
-        query_string = "SELECT year, state, count(*) FROM [publicdata:samples.natality] where year is not null and state is not null GROUP by year, state;".format(_DATABASE_NAME)
+        query_string = "SELECT mother_age, mother_race, alcohol_use, avg(weight_pounds), year, count(*) FROM [publicdata:samples.natality] where alcohol_use is not NULL and weight_pounds is not null GROUP by mother_age, mother_race, alcohol_use, year order by mother_age desc;".format(_DATABASE_NAME)
         births = self.run_query(query_string, filename='data/PA2.json')
 
         # similar to the google SQL work we did in byte4, the stuff we 
         # care about is in rows
         rows = births[u'rows']
-        _states = []
+        states = []
         for row in rows:
-            year  = row[u'f'][0][u'v']
-            state = row[u'f'][1][u'v']
-            count = row[u'f'][2][u'v']
-            _state = {'year':int(year),'state':unicode.encode(state), 'count':int(count)}
-            _states = _states + [_state]            
+            mother_age  = row[u'f'][0][u'v']
+            mother_race  = row[u'f'][1][u'v']
+            alcohol_use  = row[u'f'][2][u'v']
+            avg_weight  = row[u'f'][3][u'v']
+            year  = row[u'f'][4][u'v']
+            count = row[u'f'][5][u'v']
+            state = {'mother_age':mother_age, 'mother_race':mother_race, 'alcohol_use':alcohol_use, 'avg_weight':float(avg_weight), 'year':int(year), 'count':int(count)}
+            states = states + [state]            
         
-        context = {"_states": _states}
+        context = {"states": states}
         
         # and render the response
         self.render_response('index.html', **context)
@@ -88,28 +91,29 @@ class MainHandler(BaseHandler):
         #====================================================================
         # Sample query for getting #births by state 
         #====================================================================
-        state_selected = self.request.get('input_state')
+        state_selected = self.request.get('state')
         
         logging.info("running birth related queries")
         logging.info("Selected state" + state_selected)
         #query_string = 'SELECT state, count(*) FROM [{0}] GROUP by state;'.format(_DATABASE_NAME)
-        query_string = "SELECT mother_age, avg(weight_pounds),year,state, count(*) FROM [publicdata:samples.natality] where state=\'" + state_selected + "\' and  mother_age < 20 GROUP by mother_age, year, state order by mother_age desc;".format(_DATABASE_NAME)
+        query_string = "SELECT mother_age, mother_race, alcohol_use, avg(weight_pounds),year, count(*) FROM [publicdata:samples.natality] where state=\'" + state_selected + "\' and alcohol_use is not NULL GROUP by mother_age, mother_race, alcohol_use, year order by mother_age desc;".format(_DATABASE_NAME)
         births = self.run_query(query_string, filename='data/PA2.json')
 
         # similar to the google SQL work we did in byte4, the stuff we 
         # care about is in rows
         rows = births[u'rows']
-        _states = []
+        states = []
         for row in rows:
             mother_age  = row[u'f'][0][u'v']
-            avg_weight  = row[u'f'][1][u'v']
-            year  = row[u'f'][2][u'v']
-            state = row[u'f'][3][u'v']
-            count = row[u'f'][4][u'v']
-            _state = {'mother_age':unicode.encode(mother_age), 'avg_weight':float(avg_weight), 'year':int(year), 'state':unicode.encode(state), 'count':int(count)}
-            _states = _states + [_state]            
+            mother_race  = row[u'f'][1][u'v']
+            alcohol_use  = row[u'f'][2][u'v']
+            avg_weight  = row[u'f'][3][u'v']
+            year  = row[u'f'][4][u'v']
+            count = row[u'f'][5][u'v']
+            state = {'mother_age':unicode.encode(mother_age), 'mother_race':unicode.encode(mother_race), 'alcohol_use':unicode.encode(alcohol_use), 'avg_weight':float(avg_weight), 'year':int(year), 'count':int(count)}
+            states = states + [state]            
         
-        context = {"_states": _states}
+        context = {"states": states}
         
         # and render the response
         self.render_response('index.html', **context)    
