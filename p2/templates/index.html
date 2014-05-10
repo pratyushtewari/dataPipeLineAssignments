@@ -66,16 +66,12 @@
    <h2>Child Birth data, USA</h2>
   <table>
   <tr>
-  <th>Mother's Age</th>
-  <th>Avarage Weight</th>
   <th>Year</th>
   <th>State</th>
   <th>Count</th>
   </tr>
    {% for _state in _states %}      
     <tr>
-      <td>{{_state['mother_age']}}</td>
-      <td>{{_state['avg_weight']}}</td>
       <td>{{_state['year']}}</td>
       <td>{{_state['state']}}</td>
       <td>{{_state['count']}}</td> 

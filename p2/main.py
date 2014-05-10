@@ -64,7 +64,7 @@ class MainHandler(BaseHandler):
         
         logging.info("running birth related queries")
         #query_string = 'SELECT state, count(*) FROM [{0}] GROUP by state;'.format(_DATABASE_NAME)
-        query_string = "SELECT mother_age, avg(weight_pounds), year, state, count(*) FROM [publicdata:samples.natality] where mother_age is not null and weight_pounds is not null and year is not null and state is not null  and mother_age < 20  GROUP by mother_age, year, state order by mother_age desc;".format(_DATABASE_NAME)
+        query_string = "SELECT year, state, count(*) FROM [publicdata:samples.natality] where year is not null and state is not null GROUP by year, state;".format(_DATABASE_NAME)
         births = self.run_query(query_string, filename='data/PA2.json')
 
         # similar to the google SQL work we did in byte4, the stuff we 
@@ -72,12 +72,10 @@ class MainHandler(BaseHandler):
         rows = births[u'rows']
         _states = []
         for row in rows:
-            mother_age  = row[u'f'][0][u'v']
-            avg_weight  = row[u'f'][1][u'v']
-            year  = row[u'f'][2][u'v']
-            state = row[u'f'][3][u'v']
-            count = row[u'f'][4][u'v']
-            _state = {'mother_age':mother_age, 'avg_weight':float(avg_weight), 'year':int(year),'state':unicode.encode(state), 'count':int(count)}
+            year  = row[u'f'][0][u'v']
+            state = row[u'f'][1][u'v']
+            count = row[u'f'][2][u'v']
+            _state = {'year':int(year),'state':unicode.encode(state), 'count':int(count)}
             _states = _states + [_state]            
         
         context = {"_states": _states}
